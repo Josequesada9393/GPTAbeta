@@ -1,0 +1,25 @@
+{
+  "name": "gp-ta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kennyk22/GP-TA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kennyk22/GP-TA/issues"
+  },
+  "homepage": "https://github.com/Kennyk22/GP-TA#readme",
+  "dependencies": {
+    "react-stripe-js": "^1.1.2",
+    "react-transition-group": "^4.4.5",
+    "tesseract.js": "^4.0.2",
+    "text-from-image": "^1.1.1"
+  }
+}

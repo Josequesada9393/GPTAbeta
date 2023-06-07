@@ -1,0 +1,53 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node build/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/sequelize": "^4.28.14",
+    "add": "^2.0.6",
+    "concurrently": "^7.6.0",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "gpt-to-chatgpt": "^0.2.2",
+    "jwks-rsa": "^3.0.1",
+    "koa": "^2.14.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-cors": "^0.0.16",
+    "koa-jwt": "^4.0.4",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.20",
+    "openai": "^3.2.1",
+    "path": "^0.12.7",
+    "pg": "^8.11.0",
+    "postgres": "^3.3.3",
+    "sequelize": "^6.32.0",
+    "stripe": "^11.8.0",
+    "typescript": "^4.9.4",
+    "update": "^0.7.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/jest": "^29.4.0",
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-cors": "^0.0.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^18.11.18",
+    "@types/supertest": "^2.0.12",
+    "babel-jest": "^29.4.2",
+    "jest": "^29.4.2",
+    "supertest": "^6.3.3"
+  }
+}
