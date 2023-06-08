@@ -5,7 +5,9 @@ interface AssignmentAttributes {
     id: number;
     ownerId: string;
     text: string;
-    response: string;
+    responseMistakes: string;
+    responseList: string;
+    responseExpand: string
     studentId: number;
     titleId:number
 }
@@ -18,7 +20,9 @@ export class Assignment
         public id!: number;
         public ownerId!: string;
         public text!: string;
-        public response!: string;
+        public responseMistakes!: string;
+        public responseList!: string;
+        public responseExpand!: string;
         public studentId!: number;
         public titleId!: number;
 
@@ -40,7 +44,15 @@ export class Assignment
                 type: new DataTypes.TEXT,
                 allowNull: false
             },
-            response: {
+            responseMistakes: {
+                type: new DataTypes.TEXT,
+                allowNull:false
+            },
+            responseList: {
+                type: new DataTypes.TEXT,
+                allowNull:false
+            },
+            responseExpand:{
                 type: new DataTypes.TEXT,
                 allowNull:false
             },

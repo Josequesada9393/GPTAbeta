@@ -46,12 +46,17 @@ exports.default = {
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
             const updateCheck = yield Assignment_1.Assignment.findOne({ where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId } });
             if (!updateCheck) {
-                const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId });
-                ctx.body = { text: response.dataValues.response };
+                const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3, titleId: titleId, studentId: studentId });
+                ctx.body = { responseMistakes: response.dataValues.responseMistakes,
+                    responseList: response.dataValues.responseList,
+                    responseExpand: response.dataValues.responseExpand };
             }
             else {
-                const response = yield Assignment_1.Assignment.update({ text: JSON.stringify(content), response: feedback }, { where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning: true });
-                ctx.body = { text: response[1][0].dataValues.response };
+                const response = yield Assignment_1.Assignment.update({ text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3, }, { where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning: true });
+                ctx.body = { responseMistakes: response[1][0].dataValues.responseMistakes,
+                    responseList: response[1][0].dataValues.responseList,
+                    responseExpand: response[1][0].dataValues.responseExpand
+                };
             }
             // console.log(feedback)
             // ctx.body = feedback
@@ -68,7 +73,9 @@ exports.default = {
             const titleId = parseInt(body.titleId);
             const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: JSON.stringify(userEmail), titleId: titleId } });
             ctx.status = 200;
-            ctx.body = response ? { text: response.dataValues.response } : { text: null };
+            ctx.body = response ? { responseMistakes: response.dataValues.responseMistakes,
+                responseList: response.dataValues.responseList,
+                responseExpand: response.dataValues.responseExpand } : { text: null };
         }
         catch (error) {
             ctx.status = 500;

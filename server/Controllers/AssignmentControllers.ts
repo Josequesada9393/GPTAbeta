@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import { Assignment } from "../Models/Assignment";
 import { aiProp, getAuth0Email } from "../Middleware/Helpers";
 import { AIPromptTextWithErros, AIPromptListOfErrors } from "../Prompts/Promts";
-
 dotenv.config()
 
 
@@ -41,11 +40,17 @@ export default {
             const userEmail = await getAuth0Email(ctx)
             const updateCheck = await Assignment.findOne({where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }})
             if (!updateCheck) {
-                const response = await Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId })
-                ctx.body = { text: response.dataValues.response }
-            } else {
-                const response = await Assignment.update({text: JSON.stringify(content), response: feedback}, {where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning:true})
-                ctx.body = { text: response[1][0].dataValues.response}
+                const response = await Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3, titleId: titleId, studentId: studentId })
+                ctx.body = { responseMistakes: response.dataValues.responseMistakes, 
+                    responseList: response.dataValues.responseList, 
+                    responseExpand: response.dataValues.responseExpand }
+]            } else {
+                const response = await Assignment.update({text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3,}, {where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning:true})
+
+                ctx.body = { responseMistakes: response[1][0].dataValues.responseMistakes,
+                    responseList: response[1][0].dataValues.responseList,
+                    responseExpand: response[1][0].dataValues.responseExpand
+                }
             }
             // console.log(feedback)
             // ctx.body = feedback
@@ -63,7 +68,9 @@ export default {
             const titleId = parseInt(body.titleId)
             const response = await Assignment.findOne({where: {studentId: studentId, ownerId:JSON.stringify(userEmail), titleId:titleId}})
             ctx.status = 200
-            ctx.body = response ? {text : response.dataValues.response} : {text: null}
+            ctx.body = response ? { responseMistakes: response.dataValues.responseMistakes, 
+                responseList: response.dataValues.responseList, 
+                responseExpand: response.dataValues.responseExpand } : {text: null}
         } catch (error) {
             ctx.status = 500
             console.log(error)

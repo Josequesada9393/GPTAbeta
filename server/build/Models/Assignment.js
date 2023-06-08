@@ -20,7 +20,15 @@ Assignment.init({
         type: new sequelize_1.DataTypes.TEXT,
         allowNull: false
     },
-    response: {
+    responseMistakes: {
+        type: new sequelize_1.DataTypes.TEXT,
+        allowNull: false
+    },
+    responseList: {
+        type: new sequelize_1.DataTypes.TEXT,
+        allowNull: false
+    },
+    responseExpand: {
         type: new sequelize_1.DataTypes.TEXT,
         allowNull: false
     },
