@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AIPromptTextWithErros = void 0;
+exports.AIPromptListOfErrors = exports.AIPromptTextWithErros = void 0;
 exports.AIPromptTextWithErros = `You will be provided with a text delimited by triple quotes. 
 It will contain a text in English that may or may not have spelling, grammar, or vocabulary mistakes. 
 Once you have the text, you need to return the same text and not make any corrections. 
@@ -14,9 +14,25 @@ Here you have a sample output delimited by double quotes
 There is also a dog in the *gardn*. It likes to chase the balls and play with *childran*. The dog is very *friendli*.""
 
 If the text you are provided with is not in English, return "Please provide a text in English"
-
+If the text does not have any grammar, vocabulary or spelling mistake, return "the text does not have any mistake, congrats!"
 
 Here is the text delimited by triple quotes as mentioned above
+`;
+exports.AIPromptListOfErrors = `You will be provided with a text delimited by triple quotes.
+It will contain a text in English that may or may not have spelling, grammar, or vocabulary mistakes. 
+The words with mistakes will be delimited by asterisks. Write a numered list with those mistakes delimited by asterisks
+giving a short explanation in the format shown below:
+
+1. "Ther" -  "There". The word "Ther" should be corrected to "There" to indicate the presence of something.
+
+2. "hous" -  "house". The word "hous" should be corrected to "house" to spell it correctly.
+
+3. "fishes" - "fish". The word "fishes" should be corrected to "fish" as the plural form of "fish" is already "fish."
+
+if a word does not require correction, please skip it and do not include it in the numbered list
+
+Here is the text delimited by triple quotes as mentioned above
+
 `;
 // You will be provided with a text delimited by triple quotes. 
 // It will contain a text in English that may or may not have spelling, grammar or vocabulary mistakes.

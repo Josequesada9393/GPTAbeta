@@ -3,7 +3,7 @@ import { OpenAIApi, Configuration, CreateChatCompletionRequest, createChatComple
 import dotenv from 'dotenv';
 import { Assignment } from "../Models/Assignment";
 import { aiProp, getAuth0Email } from "../Middleware/Helpers";
-import { AIPromptTextWithErros } from "../Prompts/Promts";
+import { AIPromptTextWithErros, AIPromptListOfErrors } from "../Prompts/Promts";
 
 dotenv.config()
 
@@ -25,9 +25,9 @@ export default {
 
             // //FIRST AI CALL
             const aiResponse1 = await openai.createChatCompletion(aiProp(`${AIPromptTextWithErros} + """${content}"""`) as CreateChatCompletionRequest);
-            const feedback1 =  JSON.stringify(aiResponse1.data.choices[0].message?.content)
+            const feedback1 =  await JSON.stringify(aiResponse1.data.choices[0].message?.content)
             // SECOND AI CALL
-            const aiResponse2 = await openai.createChatCompletion(aiProp("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content) as CreateChatCompletionRequest);
+            const aiResponse2 = await openai.createChatCompletion(aiProp(`${AIPromptListOfErrors} + """${feedback1}"""`) as CreateChatCompletionRequest);
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].message?.content)
 
             // //THIRD AI CALL
@@ -40,7 +40,6 @@ export default {
             // calls auth0 for usertoken and extracts email
             const userEmail = await getAuth0Email(ctx)
             const updateCheck = await Assignment.findOne({where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }})
-            console.log(updateCheck)
             if (!updateCheck) {
                 const response = await Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId })
                 ctx.body = { text: response.dataValues.response }
