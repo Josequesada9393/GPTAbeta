@@ -3,6 +3,7 @@ import { Assignment } from './Models/Assignment';
 import { AssignmentTitle } from './Models/AssignmentTitles';
 import { Student } from './Models/Student';
 import { bootServer } from './server';
+
 dotenv.config();
 
 const PORT: number = parseInt(process.env.PORT ?? '3005');

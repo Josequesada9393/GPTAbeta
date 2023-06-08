@@ -20,7 +20,7 @@ const Promts_1 = require("../Prompts/Promts");
 dotenv_1.default.config();
 exports.default = {
     aiPost: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
+        var _a, _b, _c;
         try {
             //creates config and calls ai to make feedback
             const body = ctx.request.body;
@@ -32,21 +32,20 @@ exports.default = {
             });
             const openai = new openai_1.OpenAIApi(configuration);
             // //FIRST AI CALL
-            const aiResponse1 = yield openai.createChatCompletion((0, Helpers_1.aiProp)(Promts_1.AIPromptTextWithErros + content));
+            const aiResponse1 = yield openai.createChatCompletion((0, Helpers_1.aiProp)(`${Promts_1.AIPromptTextWithErros} + """${content}"""`));
             const feedback1 = JSON.stringify((_a = aiResponse1.data.choices[0].message) === null || _a === void 0 ? void 0 : _a.content);
-            console.log;
-            // // SECOND AI CALL
-            // const aiResponse2 = await openai.createChatCompletion(aiProp("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content) as CreateChatCompletionRequest);
-            // const feedback2 = JSON.stringify(aiResponse2.data.choices[0].message?.content)
-            // // //THIRD AI CALL
-            // const aiResponse3 = await openai.createChatCompletion(aiProp("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content) as CreateChatCompletionRequest)
-            // const feedback3 = JSON.stringify(aiResponse3.data.choices[0].message?.content)
-            // //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            // const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
-            const feedback = feedback1;
+            // SECOND AI CALL
+            const aiResponse2 = yield openai.createChatCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content));
+            const feedback2 = JSON.stringify((_b = aiResponse2.data.choices[0].message) === null || _b === void 0 ? void 0 : _b.content);
+            // //THIRD AI CALL
+            const aiResponse3 = yield openai.createChatCompletion((0, Helpers_1.aiProp)("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content));
+            const feedback3 = JSON.stringify((_c = aiResponse3.data.choices[0].message) === null || _c === void 0 ? void 0 : _c.content);
+            //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
+            const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3;
             // calls auth0 for usertoken and extracts email
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
             const updateCheck = yield Assignment_1.Assignment.findOne({ where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId } });
+            console.log(updateCheck);
             if (!updateCheck) {
                 const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId });
                 ctx.body = { text: response.dataValues.response };
@@ -55,8 +54,8 @@ exports.default = {
                 const response = yield Assignment_1.Assignment.update({ text: JSON.stringify(content), response: feedback }, { where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning: true });
                 ctx.body = { text: response[1][0].dataValues.response };
             }
-            console.log(ctx.body);
-            ctx.body = feedback;
+            // console.log(feedback)
+            // ctx.body = feedback
         }
         catch (error) {
             // console.log(error)

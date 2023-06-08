@@ -12,6 +12,7 @@ const addFeedback = async (feedbackText:string, token:string, titleId: number, s
         body: JSON.stringify({content: feedbackText, titleId: titleId, studentId: studentId})
     }).then(async response => {
         const result = await response.json()
+        console.log(result)
         return result
    })
     } catch (error) {
