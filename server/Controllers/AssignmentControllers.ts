@@ -3,7 +3,7 @@ import { OpenAIApi, Configuration, CreateChatCompletionRequest, createChatComple
 import dotenv from 'dotenv';
 import { Assignment } from "../Models/Assignment";
 import { aiProp, getAuth0Email } from "../Middleware/Helpers";
-import { AIPromptTextWithErros, AIPromptListOfErrors } from "../Prompts/Promts";
+import { AIPromptTextWithErros, AIPromptListOfErrors, AIPromtExpandKnowledge } from "../Prompts/Promts";
 dotenv.config()
 
 
@@ -18,33 +18,34 @@ export default {
             const studentId = body.studentId
             const titleId = body.titleId
             const configuration = new Configuration({
-                apiKey: "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",
+                apiKey: "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"
             });
             const openai = new OpenAIApi(configuration)
-
-            // //FIRST AI CALL
+            
+            //FIRST AI CALL
             const aiResponse1 = await openai.createChatCompletion(aiProp(`${AIPromptTextWithErros} + """${content}"""`) as CreateChatCompletionRequest);
-            const feedback1 =  await JSON.stringify(aiResponse1.data.choices[0].message?.content)
+            const feedback1 = JSON.stringify(aiResponse1.data.choices[0].message?.content)
             // SECOND AI CALL
+
             const aiResponse2 = await openai.createChatCompletion(aiProp(`${AIPromptListOfErrors} + """${feedback1}"""`) as CreateChatCompletionRequest);
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].message?.content)
 
             // //THIRD AI CALL
-            const aiResponse3 = await openai.createChatCompletion(aiProp("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content) as CreateChatCompletionRequest)
+            const aiResponse3 = await openai.createChatCompletion(aiProp(`${AIPromtExpandKnowledge} + """${content}"""`) as CreateChatCompletionRequest)
             const feedback3 = JSON.stringify(aiResponse3.data.choices[0].message?.content)
 
-            //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
+            // COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
+            // const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
 
             // calls auth0 for usertoken and extracts email
-            const userEmail = await getAuth0Email(ctx)
+            const userEmail = await getAuth0Email(ctx);
             const updateCheck = await Assignment.findOne({where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }})
             if (!updateCheck) {
                 const response = await Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3, titleId: titleId, studentId: studentId })
                 ctx.body = { responseMistakes: response.dataValues.responseMistakes, 
                     responseList: response.dataValues.responseList, 
                     responseExpand: response.dataValues.responseExpand }
-]            } else {
+          } else {
                 const response = await Assignment.update({text: JSON.stringify(content), responseMistakes: feedback1, responseList: feedback2, responseExpand: feedback3,}, {where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning:true})
 
                 ctx.body = { responseMistakes: response[1][0].dataValues.responseMistakes,
@@ -56,7 +57,11 @@ export default {
             // ctx.body = feedback
 
             } catch (error) {
-                // console.log(error)
+                console.log(error)
+                 ctx.body = { responseMistakes: 'oops something went wrong',
+                    responseList: '',
+                    responseExpand: ''
+                }
             }
 
     },

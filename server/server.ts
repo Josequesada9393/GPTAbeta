@@ -17,7 +17,7 @@ export const bootServer = (port: number): Koa<Koa.DefaultState, Koa.DefaultConte
     app.use(verifyJwt)
     //these routes must be authorized
     app.use(authRouter.routes())
-    app.listen(port, ()=>{
+    app.listen(port, ()=> {
         console.log(`server is running on port: ${port}`)
     })
 

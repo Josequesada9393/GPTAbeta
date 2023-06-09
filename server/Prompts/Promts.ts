@@ -36,6 +36,13 @@ Here is the text delimited by triple quotes as mentioned above
 
 `
 
+export const AIPromtExpandKnowledge = `You will be provided with a text delimited by triple quotes.
+Describe five ways to make the text better by improving how it is written. 
+Use examples from the text and explain the improvements in simple terms that students can easily grasp
+If there is no text or if the text is not in English, return "Please provide a valid text"
+
+Here is the text delimited by triple quotes as mentioned above`
+
 // You will be provided with a text delimited by triple quotes. 
 // It will contain a text in English that may or may not have spelling, grammar or vocabulary mistakes.
 // Once you have the text, you need to return the same text and not do any correction. You only need to delimit each word or sentence that has a spelling, grammar or vocabulary mistake in asterisks. Words and sentences with correct grammar, spelling and vocabulary should not be delimited.

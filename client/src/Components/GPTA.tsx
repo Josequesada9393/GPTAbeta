@@ -26,6 +26,7 @@ function GPTA() {
 
   const {isAuthenticated, getAccessTokenSilently, user} = useAuth0()
 
+  console.log(isAuthenticated, 'auth')
   useEffect(  ()=>{
     if (isAuthenticated) {
       getStudentsAndAssignments()
@@ -55,12 +56,11 @@ function GPTA() {
       const firstAnswer = postResult.responseMistakes
       const secondAnswer = postResult.responseList
       const thirdAnswer = postResult.responseExpand
-      console.log(secondAnswer)
       dispatch(actionHighlight(formatAnswer(firstAnswer)))
       dispatch(actionList(formatText(secondAnswer)))
       // dispatch(actionList(formatText(secondAnswer.slice(0, secondAnswer.length-1))))
 
-      dispatch(actionSuggestion(formatText(thirdAnswer.slice(0, thirdAnswer.length-1))))
+      dispatch(actionSuggestion(formatText(thirdAnswer)))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -70,10 +70,10 @@ function GPTA() {
 
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
-    const newtext = text.replace(/"\s"/g, " ")
-    const newnewtext = newtext.replace(/\\+n+/g, "")
+    // const newtext = text..replace(/"\s"/g, " ")
+    // const newnewtext = text.replace(/\\+n+/g, "")
     const regex = /\*+(.*?)\*+/g;
-    const result = newnewtext.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
+    const result = text.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
     return result
   }
 

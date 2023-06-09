@@ -8,6 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import About from './Components/About';
 import Pricing from './Components/Payments/Pricing';
 import Completion from './Components/Payments/Completion';
+import Download from './Components/Download/Download';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
@@ -24,6 +25,9 @@ function App() {
              <Dashboard/> :
              <LoginPage />
              }/>
+          <Route path="/downloads" element={isAuthenticated ? 
+          <Download/> : 
+          <LoginPage/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/completion" element={<Completion/>}/>

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AIPromptListOfErrors = exports.AIPromptTextWithErros = void 0;
+exports.AIPromtExpandKnowledge = exports.AIPromptListOfErrors = exports.AIPromptTextWithErros = void 0;
 exports.AIPromptTextWithErros = `You will be provided with a text delimited by triple quotes. 
 It will contain a text in English that may or may not have spelling, grammar, or vocabulary mistakes. 
 Once you have the text, you need to return the same text and not make any corrections. 
@@ -34,6 +34,12 @@ if a word does not require correction, please skip it and do not include it in t
 Here is the text delimited by triple quotes as mentioned above
 
 `;
+exports.AIPromtExpandKnowledge = `You will be provided with a text delimited by triple quotes.
+Describe five ways to make the text better by improving how it is written. 
+Use examples from the text and explain the improvements in simple terms that students can easily grasp
+If there is no text or if the text is not in English, return "Please provide a valid text"
+
+Here is the text delimited by triple quotes as mentioned above`;
 // You will be provided with a text delimited by triple quotes. 
 // It will contain a text in English that may or may not have spelling, grammar or vocabulary mistakes.
 // Once you have the text, you need to return the same text and not do any correction. You only need to delimit each word or sentence that has a spelling, grammar or vocabulary mistake in asterisks. Words and sentences with correct grammar, spelling and vocabulary should not be delimited.
