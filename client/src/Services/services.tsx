@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3005'
+const baseURL = 'https://gptaserver.onrender.com/'
 
 
 const addFeedback = async (feedbackText:string, token:string, titleId: number, studentId: number) => {

@@ -37,7 +37,7 @@ Here is the text delimited by triple quotes as mentioned above
 exports.AIPromtExpandKnowledge = `You will be provided with a text delimited by triple quotes.
 Describe five ways to make the text better by improving how it is written. 
 Use examples from the text and explain the improvements in simple terms that students can easily grasp
-If there is no text or if the text is not in English, return "Please provide a valid text"
+If there is no text or if the text is not in English, return "no mistakes found"
 
 Here is the text delimited by triple quotes as mentioned above`;
 // You will be provided with a text delimited by triple quotes. 

@@ -28,7 +28,7 @@ exports.default = {
             const studentId = body.studentId;
             const titleId = body.titleId;
             const configuration = new openai_1.Configuration({
-                apiKey: "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"
+                apiKey: "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"
             });
             const openai = new openai_1.OpenAIApi(configuration);
             //FIRST AI CALL
