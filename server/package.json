@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/sequelize": "^4.28.14",
     "add": "^2.0.6",
+    "axios": "^1.4.0",
     "concurrently": "^7.6.0",
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",

@@ -27,6 +27,7 @@ exports.sequelize = void 0;
 const dotenv = __importStar(require("dotenv"));
 const sequelize_1 = require("sequelize");
 dotenv.config();
+exports.sequelize = new sequelize_1.Sequelize(process.env.URI_STRING_VERCEL);
 // export const sequelize = new Sequelize(
 //     process.env.DB_NAME ?? "my_db",
 //     process.env.DB_USER ?? "postgres",
@@ -37,4 +38,3 @@ dotenv.config();
 //         logging: false,
 //     }
 // );
-exports.sequelize = new sequelize_1.Sequelize(process.env.URI_STRING_VERCEL);

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAuth0Email = exports.aiProp = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const axios_1 = __importDefault(require("axios"));
 dotenv_1.default.config();
 //creates prompt for ai
 const aiProp = (string) => {
@@ -29,14 +30,24 @@ const aiProp = (string) => {
 };
 exports.aiProp = aiProp;
 //gets email from auth0 token
+// export const getAuth0Email = async (ctx: Context) => {
+//     const accessToken = await ctx.get('authorization').split(' ')[1]
+//     const authResponse = await fetch('https://dev-nuxp1yqmbgbv4efn.us.auth0.com/userinfo', {
+//         headers: {
+//             authorization: `Bearer ${accessToken}`
+//         }
+//     });
+//     const userInfo:any = await authResponse.json()
+//     return userInfo.email
+// }
 const getAuth0Email = (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     const accessToken = yield ctx.get('authorization').split(' ')[1];
-    const authResponse = yield fetch('https://dev-nuxp1yqmbgbv4efn.us.auth0.com/userinfo', {
+    const authResponse = yield axios_1.default.get('https://dev-nuxp1yqmbgbv4efn.us.auth0.com/userinfo', {
         headers: {
-            authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${accessToken}`
         }
     });
-    const userInfo = yield authResponse.json();
+    const userInfo = authResponse.data;
     return userInfo.email;
 });
 exports.getAuth0Email = getAuth0Email;
