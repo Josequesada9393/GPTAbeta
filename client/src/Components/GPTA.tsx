@@ -119,7 +119,7 @@ const formatText = (text:any) => {
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 1 }} ref={myRef} className="flex justify-center items-center flex-col" data-testid="GPTAcontainer">
       {/* second header with dropdown menus */}
-      <div className='justify-center md:justify-between flex shadow w-full px-5'>
+      <div className='justify-center md:justify-between flex shadow w-full md:py-0 py-4 px-5'>
         <p>{isAuthenticated ? <a className=' hidden md:flex border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{`${user?.name}'s classroom`}</a> : <a>you are not logged in</a> }</p>
         <div className='flex items-center justify-center'>
         {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> :  <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
@@ -138,11 +138,11 @@ const formatText = (text:any) => {
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block" data-testid='GPTA-Text'/>and have it marked in seconds
           </h1>
-          <div className="flex flex-row justify-around  w-full">
-            <button onClick={()=>dispatch(actionInputFile)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">File</button>
-            <button onClick={()=>dispatch(actionInputText)} className="flex mb-1 md:m-2 text-white bg-[#cc2936]  rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Text</button>
-            <button onClick={()=>dispatch(actionInputImage)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Image</button>
-            <button onClick={() => checkGrammar()} className="flex mb-1 md:m-2 text-white bg-[#020105] md:border-0  rounded py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
+          <div className="flex flex-row justify-around gap-3 w-full mb-3">
+            <button onClick={()=>dispatch(actionInputFile)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded py-1 px-3 md:py-2 md:px-5 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex mb-1 md:m-2 text-white bg-[#cc2936]  rounded py-1 px-3 md:py-2 md:px-5 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Text</button>
+            <button onClick={()=>dispatch(actionInputImage)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded py-1 px-3 md:py-2 md:px-5 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Image</button>
+            <button onClick={() => checkGrammar()} className="flex mb-1 md:m-2 text-white bg-[#020105] md:border-0 py-2 px-3  rounded md:py-2 md:px-5 focus:outline-none hover:bg-gray-600 md:rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
           </div >
               {GPTAstate.type === 'input' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
