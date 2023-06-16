@@ -139,10 +139,10 @@ const formatText = (text:any) => {
             <br className="hidden lg:inline-block" data-testid='GPTA-Text'/>and have it marked in seconds
           </h1>
           <div className="flex flex-row justify-around  w-full">
-            <button onClick={()=>dispatch(actionInputFile)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">File</button>
-            <button onClick={()=>dispatch(actionInputText)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Text</button>
-            <button onClick={()=>dispatch(actionInputImage)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Image</button>
-            <button onClick={() => checkGrammar()} className="flex mb-1 md:m-2 text-white bg-[#020105] md:border-0 border-2 border-black py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
+            <button onClick={()=>dispatch(actionInputFile)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex mb-1 md:m-2 text-white bg-[#cc2936]  rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Text</button>
+            <button onClick={()=>dispatch(actionInputImage)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] rounded md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Image</button>
+            <button onClick={() => checkGrammar()} className="flex mb-1 md:m-2 text-white bg-[#020105] md:border-0  rounded py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
           </div >
               {GPTAstate.type === 'input' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
@@ -184,7 +184,7 @@ const formatText = (text:any) => {
                 </ul>
               </div>
             </div>  :
-            <HashLoader className="left-44 top-44 absolute" color='red' size={80}/>
+            <HashLoader className="md:top-[25vh] md:left-[30vh] md:mx-0 mx-auto" color='red' size={80}/>
           }
         </div>
       </div> :

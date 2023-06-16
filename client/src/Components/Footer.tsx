@@ -14,9 +14,7 @@ function Footer() {
               <span className="text-gray-700 text-xl font-bold py-2 px-4 hover:text-black cursor-pointer transition duration-200 ease-in-out">GP-TA</span>
           </a>
         </div>
-        <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2023 GPTA —
-          <a href="https://twitter.com/knyttneve" className="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">Kenneth & Jose</a>
-        </p>
+
         <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
           <a className="text-gray-500">
             <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
